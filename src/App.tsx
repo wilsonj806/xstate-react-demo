@@ -4,12 +4,14 @@
 // import "./App.css";
 
 import { Feedback } from "./components";
-
+import { FeedbackStateProvider } from "./context";
 function App() {
   return (
-    <main>
-      <Feedback />
-    </main>
+    <FeedbackStateProvider>
+      <main>
+        <Feedback />
+      </main>
+    </FeedbackStateProvider>
   );
 }
 
