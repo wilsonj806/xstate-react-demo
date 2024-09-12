@@ -1,39 +1,44 @@
-import { useReducer } from "react";
+import { useEffect, useReducer } from "react";
 import { feedbackReducer } from "../state";
 import { QuestionScreen } from "./QuestionScreen";
 import { FormScreen } from "./FormScreen";
 import { ThanksScreen } from "./ThanksScreen";
+import { StateNames, TransitionNames } from "../state/machineStates";
+import { useFeedbackState } from "../context";
 // import { sendFeedback } from "./sendFeedback";
 
 export function Feedback(): JSX.Element | null {
-  const [state, send] = useReducer(feedbackReducer, "question");
-
+  // const [state, send] = useReducer(feedbackReducer, "question");
+  const { state, sendEvent } = useFeedbackState();
+  useEffect(() => {
+    console.log("yep", state);
+  }, [state]);
   const handleSubmit = (value: any) => {
     // try {
     //   await sendFeedback(value);
-    send({ type: "SUBMIT", value });
+    sendEvent({ type: TransitionNames.submitFeedback, value });
     // } catch (e) {
     //   console.error(e);
     // }
   };
-  switch (state) {
-    case "question":
+  switch (state.value) {
+    case StateNames.initial:
       return (
         <QuestionScreen
-          onClickGood={() => send({ type: "GOOD" })}
-          onClickBad={() => send({ type: "BAD" })}
-          onClose={() => send({ type: "CLOSE" })}
+          onClickGood={() => sendEvent({ type: TransitionNames.good })}
+          onClickBad={() => sendEvent({ type: TransitionNames.bad })}
+          onClose={() => sendEvent({ type: "CLOSE" })}
         />
       );
-    case "form":
+    case StateNames.feedback:
       return (
         <FormScreen
           onSubmit={handleSubmit}
-          onClose={() => send({ type: "CLOSE" })}
+          onClose={() => sendEvent({ type: "CLOSE" })}
         />
       );
-    case "thanks":
-      return <ThanksScreen onClose={() => send({ type: "CLOSE" })} />;
+    case StateNames.success:
+      return <ThanksScreen onClose={() => sendEvent({ type: "CLOSE" })} />;
     case "closed":
       return null;
     default:

@@ -5,6 +5,12 @@ export const StateNames = {
   success: "Success",
   feedback: "Feedback",
 };
+
+export const TransitionNames = {
+  good: "GOOD",
+  bad: "BAD",
+  submitFeedback: "SUBMIT_FEEDBACK",
+};
 export const feedbackStates = {
   Initial: {
     on: {
@@ -12,7 +18,7 @@ export const feedbackStates = {
         target: "Success",
       },
       BAD: {
-        target: "Feeback",
+        target: "Feedback",
       },
     },
   },
