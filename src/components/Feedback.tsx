@@ -1,14 +1,11 @@
-import { useEffect, useReducer } from "react";
-import { feedbackReducer } from "../state";
+import { useEffect } from "react";
 import { QuestionScreen } from "./QuestionScreen";
 import { FormScreen } from "./FormScreen";
 import { ThanksScreen } from "./ThanksScreen";
 import { StateNames, TransitionNames } from "../state/machineStates";
 import { useFeedbackState } from "../context";
-// import { sendFeedback } from "./sendFeedback";
 
 export function Feedback(): JSX.Element | null {
-  // const [state, send] = useReducer(feedbackReducer, "question");
   const { state, sendEvent } = useFeedbackState();
   useEffect(() => {
     console.log("yep", state);
