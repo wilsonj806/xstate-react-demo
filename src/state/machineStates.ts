@@ -23,7 +23,7 @@ export const feedbackStates = {
     },
   },
   Success: {},
-  Feeback: {
+  Feedback: {
     on: {
       SUBMIT_FEEDBACK: {
         target: "Success",
